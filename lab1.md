@@ -1,6 +1,5 @@
 ### Component Diagram
 
-'''Mermaid
 graph TD
 
 
@@ -36,4 +35,3 @@ graph TD
     DeliveryService -->|Attempt Delivery WebSocket/Push| UserB
     DeliveryService -.->|Update status Delivered/Failed| DB
     UserB -.->|ACK Acknowledgement| DeliveryService
-'''
