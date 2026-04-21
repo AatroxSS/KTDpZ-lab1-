@@ -61,3 +61,33 @@ sequenceDiagram
         DS->>DB: updateStatus(id, "DELIVERED")
     end
 ```
+
+### 3. State Diagram
+
+```mermaid
+stateDiagram-v2
+    [*] --> Created: User A sends message
+    
+    Created --> Pending: Saved to Database
+    
+    state Pending {
+        [*] --> InQueue: Added to Broker
+        InQueue --> DeliveryAttempt: Delivery Service picks up
+    }
+    
+    DeliveryAttempt --> Delivered: User B is Online & ACK received
+    
+    DeliveryAttempt --> Retrying: User B is Offline / Connection Timeout
+    
+    state Retrying {
+        [*] --> Waiting: Wait (Exponential Backoff)
+        Waiting --> InQueue: Re-enqueue for next attempt
+    }
+    
+    Retrying --> Failed: Max retries reached / TTL expired
+    
+    Delivered --> Read: User B opens chat
+    
+    Read --> [*]: Process finished
+    Failed --> [*]: Notification to Sender
+```
