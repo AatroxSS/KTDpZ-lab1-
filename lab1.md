@@ -1,41 +1,40 @@
-###Example 
-
+### Component Diagram
 
 '''Mermaid
-componentDiagram
-    actor UserA as "User A (Sender)"
-    actor UserB as "User B (Receiver)"
 
-    package "Client Layer" {
-        component WebApp as "Web/Mobile Client"
-    }
+graph TD
 
-    package "Backend Layer" {
-        component API as "API Gateway"
-        component MessageService as "Message Service"
-        component AuthService as "Auth Service"
-        component DeliveryService as "Delivery Service"
-    }
 
-    database "Database" {
-        component DB as "Messages DB"
-    }
-
-    queue "Message Broker" {
-        component Queue as "Delivery Queue"
-    }
-
-    UserA --> WebApp : "Sends message"
-    WebApp --> API : "POST /v1/messages"
-    API --> AuthService : "Authorize"
-    API --> MessageService : "Create Message"
+    UserA["User A (Sender)"]
+    UserB["User B (Receiver)"]
     
-    MessageService --> DB : "Store message (Pending)"
-    MessageService --> Queue : "Push to queue"
+    subgraph ClientLayer["Client Layer"]
+        WebApp["Web/Mobile Client"]
+    end
     
-    Queue --> DeliveryService : "Consume message"
-    DeliveryService --> UserB : "Attempt Delivery (WebSocket/Push)"
+    subgraph BackendLayer["Backend Layer"]
+        API["API Gateway"]
+        MessageService["Message Service"]
+        AuthService["Auth Service"]
+        DeliveryService["Delivery Service"]
+    end
     
-    DeliveryService -.-> DB : "Update status (Delivered/Failed)"
-    UserB -.-> DeliveryService : "ACK (Acknowledgement)"
+    subgraph DataLayer["Data Layer"]
+        DB[("Messages DB")]
+    end
+    
+    subgraph MessageBroker["Message Broker"]
+        Queue["Delivery Queue"]
+    end
+    
+    UserA -->|Sends message| WebApp
+    WebApp -->|POST /v1/messages| API
+    API -->|Authorize| AuthService
+    API -->|Create Message| MessageService
+    MessageService -->|Store message Pending| DB
+    MessageService -->|Push to queue| Queue
+    Queue -->|Consume message| DeliveryService
+    DeliveryService -->|Attempt Delivery WebSocket/Push| UserB
+    DeliveryService -.->|Update status Delivered/Failed| DB
+    UserB -.->|ACK Acknowledgement| DeliveryService
 '''
