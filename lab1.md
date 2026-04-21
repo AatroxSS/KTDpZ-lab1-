@@ -1,7 +1,8 @@
-```mermaid
+###Example 
+
+
+'''Mermaid
 componentDiagram
-    title Part 1 - Message Delivery System Architecture
-    
     actor UserA as "User A (Sender)"
     actor UserB as "User B (Receiver)"
 
@@ -37,4 +38,4 @@ componentDiagram
     
     DeliveryService -.-> DB : "Update status (Delivered/Failed)"
     UserB -.-> DeliveryService : "ACK (Acknowledgement)"
-```
+'''
