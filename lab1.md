@@ -1,7 +1,6 @@
 ### Component Diagram
 
 '''Mermaid
-
 graph TD
 
 
