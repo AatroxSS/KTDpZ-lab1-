@@ -95,7 +95,7 @@ stateDiagram-v2
 
 ### 4. ADR
 
-# ADR-003: Use Message Queue for Offline Delivery
+# ADR-001: Use Message Queue for Offline Delivery
 
 ## Status
 Accepted
