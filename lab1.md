@@ -95,8 +95,7 @@ stateDiagram-v2
 
 ### 4. ADR
 
-# ADR-001: Use Message Queue for Offline Delivery
-
+'''markdown
 ## Status
 Accepted
 
@@ -114,3 +113,4 @@ Accepted
 + Reliable delivery (гарантія доставки)
 + Можливість реалізації Retry Strategy (Exponential Backoff)
 - Increased system complexity (додатковий інфраструктурний компонент)
+```
