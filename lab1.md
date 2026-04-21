@@ -95,7 +95,7 @@ stateDiagram-v2
 
 ### 4. ADR
 
-'''markdown
+```markdown
 ## Status
 Accepted
 
