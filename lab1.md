@@ -91,3 +91,24 @@ stateDiagram-v2
     Read --> [*]: Process finished
     Failed --> [*]: Notification to Sender
 ```
+
+
+### 4. ADR
+
+## Status
+Accepted
+
+## Context
+Користувачі можуть бути офлайн протягом тривалих періодів часу. Повідомлення не повинні бути втрачені (Messages must not be lost), навіть якщо отримувач недоступний у момент відправки.
+
+## Decision
+Використовувати асинхронну доставку з використанням черги (Queue) та персистентного збереження в базі даних перед відправкою.
+
+## Alternatives
+- Direct delivery only (rejected) — повідомлення втрачаються, якщо юзер офлайн.
+- Client polling (considered) — створює зайве навантаження на мережу та батарею.
+
+## Consequences
++ Reliable delivery (гарантія доставки)
++ Можливість реалізації Retry Strategy (Exponential Backoff)
+- Increased system complexity (додатковий інфраструктурний компонент)
